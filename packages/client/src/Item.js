@@ -1,15 +1,6 @@
-import {
-    useQuery,
-    useMutation,
-} from "@apollo/client";
+import { useQuery, useMutation } from '@apollo/client';
 import styled from 'styled-components';
-import {
-    GET_ITEM,
-    UPDATE_ITEM,
-    DELETE_ITEM,
-    GET_LIST
-} from "./queries";
-
+import { GET_ITEM, UPDATE_ITEM, DELETE_ITEM, GET_LIST } from './queries';
 
 const StyledItem = styled.div`
     display: flex;
@@ -21,99 +12,76 @@ const StyledItem = styled.div`
         width: auto;
         margin: 0;
     }
-`
+`;
 
 function Item({ id, list }) {
     const {
         loading: getLoading,
         error: getError,
-        data: getData
-    } = useQuery(
-        GET_ITEM, {
-            variables: {
-                id
-            }
-        }
-    );
-    const [
-        deleteItem, {
-            data: deleteData,
-            loading: deleteLoading,
-            error: deleteError
-        }
-    ] = useMutation(
-        DELETE_ITEM, {
+        data,
+    } = useQuery(GET_ITEM, {
+        variables: {
+            id,
+        },
+    });
+    const [deleteItem, { loading: deleteLoading, error: deleteError }] =
+        useMutation(DELETE_ITEM, {
             refetchQueries: [
                 {
                     query: GET_LIST,
                     variables: {
-                        id: list
-                    }
-                }
-            ]
-        }
-    );
-    const [
-        updateItem, {
-            data: updateData,
-            loading: updateLoading,
-            error: updateError
-        }
-    ] = useMutation(
-        UPDATE_ITEM, {
+                        id: list,
+                    },
+                },
+            ],
+        });
+    const [updateItem, { loading: updateLoading, error: updateError }] =
+        useMutation(UPDATE_ITEM, {
             refetchQueries: [
                 {
                     query: GET_ITEM,
                     variables: {
-                        id
-                    }
-                }
-            ]
-        }
-    );
+                        id,
+                    },
+                },
+            ],
+        });
     if (getError) {
-        return (
-            <p>
-                ❗ Error loading item
-            </p>
-        );
+        return <p>❗ Error loading item</p>;
     }
-    if (getLoading) {
-        return (
-            <progress />
-        )
+    if (deleteError) {
+        return <p>❗ Error deleting item</p>;
     }
-    let { description, done } = getData.todoItem;
+    if (updateError) {
+        return <p>❗ Error updating item</p>;
+    }
+    const loading = getLoading || deleteLoading || updateLoading;
     return (
         <StyledItem>
-            <label
-                htmlFor={id}
-                aria-busy={getLoading}
-            >
+            <label htmlFor={id}>
                 <input
                     type="checkbox"
                     id={id}
                     name={id}
-                    checked={done}
-                    onChange={event => {
+                    checked={data && data.todoItem.done}
+                    onChange={(event) => {
                         updateItem({
                             variables: {
                                 id,
-                                done: event.target.checked
-                            }
+                                done: event.target.checked,
+                            },
                         });
                     }}
                 />
-                {description}
+                {data && data.todoItem.description}
             </label>
             <button
-                disabled={deleteLoading}
-                aria-busy={deleteLoading}
+                disabled={loading}
                 onClick={() => {
                     deleteItem({
                         variables: {
-                            id
-                        }
+                            id,
+                        },
                     });
                 }}
                 className="outline contrast"

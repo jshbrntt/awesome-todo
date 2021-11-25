@@ -35,7 +35,10 @@ const resolvers = {
 
         createTodoItem: async (_, { data }) => {
             const { list } = data;
-            const todoList = await TodoList.findById(list, { _id: 1, items: 1 });
+            const todoList = await TodoList.findById(list, {
+                _id: 1,
+                items: 1,
+            });
             console.log(todoList);
             data.list = todoList._id;
             const newTodoItem = new TodoItem(data);
@@ -46,25 +49,33 @@ const resolvers = {
         },
 
         updateTodoList: async (_, { data }) => {
-            const updatedTodoList = await TodoList.findByIdAndUpdate(data.id, data);
+            const updatedTodoList = await TodoList.findByIdAndUpdate(
+                data.id,
+                data
+            );
             return updatedTodoList;
         },
 
         updateTodoItem: async (_, { data }) => {
-            const updatedTodoItem = await TodoItem.findByIdAndUpdate(data.id, data);
+            const updatedTodoItem = await TodoItem.findByIdAndUpdate(
+                data.id,
+                data
+            );
             return updatedTodoItem;
         },
 
         deleteTodoList: async (_, { data }) => {
             const todoList = await TodoList.findById(data.id).populate('items');
             await todoList.remove();
-            await TodoItem.deleteMany({ _id: { $in: todoList.items }});
+            await TodoItem.deleteMany({ _id: { $in: todoList.items } });
             return todoList;
         },
 
         deleteTodoItem: async (_, { data }) => {
             const deletedTodoItem = await TodoItem.findByIdAndDelete(data.id);
-            const todoList = await TodoList.findById(deletedTodoItem.list, { items: 1 });
+            const todoList = await TodoList.findById(deletedTodoItem.list, {
+                items: 1,
+            });
             todoList.items.pull(deletedTodoItem._id);
             await todoList.save();
             return deletedTodoItem;

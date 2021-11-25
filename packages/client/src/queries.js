@@ -1,12 +1,8 @@
-
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 const CREATE_ITEM = gql`
     mutation CREATE_ITEM($list: ID!, $description: String!) {
-        createTodoItem(data: {
-            list: $list
-            description: $description
-        }) {
+        createTodoItem(data: { list: $list, description: $description }) {
             id
             description
             done
@@ -16,9 +12,7 @@ const CREATE_ITEM = gql`
 
 const CREATE_LIST = gql`
     mutation CREATE_LIST($title: String!) {
-        createTodoList(data: {
-            title: $title
-        }) {
+        createTodoList(data: { title: $title }) {
             id
             title
             items {
@@ -61,11 +55,9 @@ const GET_LIST = gql`
 
 const UPDATE_ITEM = gql`
     mutation UPDATE_ITEM($id: ID!, $done: Boolean, $description: String) {
-        updateTodoItem(data: {
-            id: $id
-            done: $done
-            description: $description
-        }) {
+        updateTodoItem(
+            data: { id: $id, done: $done, description: $description }
+        ) {
             id
             description
             done
@@ -75,9 +67,7 @@ const UPDATE_ITEM = gql`
 
 const DELETE_ITEM = gql`
     mutation DELETE_ITEM($id: ID!) {
-        deleteTodoItem(data: {
-            id: $id
-        }) {
+        deleteTodoItem(data: { id: $id }) {
             id
             description
             done
@@ -88,9 +78,7 @@ const DELETE_ITEM = gql`
 
 const DELETE_LIST = gql`
     mutation DELETE_LIST($id: ID!) {
-        deleteTodoList(data: {
-            id: $id
-        }) {
+        deleteTodoList(data: { id: $id }) {
             id
         }
     }
@@ -104,5 +92,5 @@ export {
     GET_LIST,
     UPDATE_ITEM,
     DELETE_ITEM,
-    DELETE_LIST
+    DELETE_LIST,
 };
