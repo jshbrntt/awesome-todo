@@ -1,0 +1,10 @@
+{
+  "name": "awesome-todo",
+  "version": "1.0.0",
+  "description": "Demo app",
+  "main": "src/main.js",
+  "repository": "https://github.com/joshua-barnett/awesome-todo",
+  "author": "Joshua Barnett <joshua@barne.tt>",
+  "license": "MIT",
+  "private": true
+}
