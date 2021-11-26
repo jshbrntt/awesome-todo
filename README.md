@@ -19,7 +19,7 @@ Quickly written TODO app (to demonstrate dockerization).
 1. Start MongoDB
 
     ```shell
-    $ mongod --storageEngine ephemeralForTest
+    $ mongod --storageEngine ephemeralForTest --dbpath /tmp
     ```
 1. Start Server
 
