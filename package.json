@@ -1,7 +1,7 @@
 {
   "name": "todo",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/main.js",
   "repository": "git@github.com:joshua-barnett/awesome-todo.git",
   "author": "Joshua Barnett <joshua@barne.tt>",
   "license": "MIT"
