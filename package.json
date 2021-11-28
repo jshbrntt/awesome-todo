@@ -1,17 +1,16 @@
 {
-  "name": "awesome-todo",
+  "name": "@awesome-todo/worktree",
   "version": "1.0.0",
   "description": "Quickly written TODO app (to demonstrate dockerization).",
   "repository": "https://github.com/joshua-barnett/awesome-todo",
   "author": "Joshua Barnett <joshua@barne.tt>",
   "license": "MIT",
   "scripts": {
-    "client": "yarn workspace client start",
-    "server": "yarn workspace server start"
+    "client": "yarn workspace @awesome-todo/client start",
+    "server": "yarn workspace @awesome-todo/server start"
   },
   "workspaces": [
-    "client",
-    "server"
+    "packages/*"
   ],
   "private": true
 }

@@ -1,0 +1,6 @@
+{
+  "name": "@awesome-todo/shared",
+  "version": "1.0.0",
+  "main": "src/lib.js",
+  "license": "MIT"
+}
