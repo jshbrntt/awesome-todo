@@ -10,7 +10,8 @@
     "server": "yarn workspace server start"
   },
   "workspaces": [
-    "packages/*"
+    "client",
+    "server"
   ],
   "private": true
 }
