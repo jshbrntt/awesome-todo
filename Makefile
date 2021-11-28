@@ -18,7 +18,7 @@ login:
 	echo $(DOCKER_PASSWORD) | docker login $(DOCKER_REGISTRY) --username $(DOCKER_USERNAME) --password-stdin
 
 push:
-	docker compose push
+	docker compose push client server
 
 lint:
 	docker compose run --rm server yarn lint
