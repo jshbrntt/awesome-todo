@@ -1,7 +1,7 @@
 const SharedData = {
-    NAME: 'Awesome TODO'
+  NAME: "Awesome TODO",
 };
 
 module.exports = {
-    SharedData
+  SharedData,
 };

@@ -1,0 +1,27 @@
+name: Awesome TODO CI
+
+on:
+  pull_request: ~
+  push:
+    branches:
+      - master
+      - develop
+
+env:
+  DOCKER_USERNAME: ${{ github.actor }}
+  DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: Login
+        run: make login
+      - name: Lint
+        run: make lint
+      - name: Push
+        run: make push
+

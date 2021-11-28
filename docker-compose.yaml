@@ -4,7 +4,8 @@ x-monorepo:
   &monorepo
   build:
     args:
-      NODE_VERSION: ${NODE_VERSION}
+      BUILDKIT_INLINE_CACHE:
+      NODE_VERSION:
   image: ${IMAGE_TAG}
   working_dir: ${WORKDIR}
   tty: true

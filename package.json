@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "client": "yarn workspace @awesome-todo/client start",
-    "server": "yarn workspace @awesome-todo/server start"
+    "server": "yarn workspace @awesome-todo/server start",
+    "lint": "yarn workspaces run lint",
+    "format": "yarn workspaces run format"
   },
   "workspaces": [
     "packages/*"
