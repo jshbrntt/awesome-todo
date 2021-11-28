@@ -1,0 +1,36 @@
+version: '3.8'
+
+x-monorepo:
+  &monorepo
+  build:
+    args:
+      NODE_VERSION: ${NODE_VERSION}
+  image: ${IMAGE_TAG}
+  working_dir: ${WORKDIR}
+  tty: true
+  stdin_open: true
+  volumes:
+    - .:${WORKDIR}
+
+services:
+  database:
+    image: mongo:5.0.4
+    volumes:
+      - mongo_data_db:/data/db
+    ports:
+      - ${MONGO_PORT}:27017
+  server:
+    << : *monorepo
+    command: yarn server
+    environment:
+      MONGO_URI: mongodb://database:27017/todo
+    ports:
+      - ${SERVER_PORT}:3000
+  client:
+    << : *monorepo
+    command: yarn client
+    ports:
+      - ${CLIENT_PORT}:3000
+
+volumes:
+  mongo_data_db:
