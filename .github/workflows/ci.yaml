@@ -24,4 +24,3 @@ jobs:
         run: make lint
       - name: Push
         run: make push
-

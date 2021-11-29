@@ -9,7 +9,7 @@ export IMAGE_TAG = $(DOCKER_REGISTRY)/awesome-todo/dev
 export NODE_VERSION = 16.13.0-alpine
 
 up:
-	docker compose up $(SERVICE)
+	docker compose up --detach $(SERVICE)
 
 down:
 	docker compose down
