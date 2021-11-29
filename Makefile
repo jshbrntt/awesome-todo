@@ -22,7 +22,7 @@ login:
 	echo $(DOCKER_PASSWORD) | docker login $(DOCKER_REGISTRY) --username $(DOCKER_USERNAME) --password-stdin
 
 pull:
-	docker compose pull server
+	docker compose pull --ignore-pull-failures server
 
 push:
 	docker compose push server
