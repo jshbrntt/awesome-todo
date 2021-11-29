@@ -5,8 +5,8 @@ export CLIENT_PORT = 3001
 export SERVER_PORT = 3000
 export SERVER_DEBUG_PORT = 9229
 export MONGO_PORT = 27017
-export DOCKER_REGISTRY = docker.pkg.github.com
-export IMAGE = $(DOCKER_REGISTRY)/joshua-barnett/awesome-todo/dev
+export DOCKER_REGISTRY =
+export IMAGE = jshbrntt/awesome-todo:latest
 export NODE_VERSION = 16.13.0-alpine
 export BUILD_TARGET = dev
 

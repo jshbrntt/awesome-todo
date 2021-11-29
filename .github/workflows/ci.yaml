@@ -8,8 +8,12 @@ on:
       - develop
 
 env:
-  DOCKER_USERNAME: ${{ github.actor }}
-  DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+  # Docker Hub
+  DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+  # GitHub
+  # DOCKER_USERNAME: ${{ github.actor }}
+  # DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   lint:
