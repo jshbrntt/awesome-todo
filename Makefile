@@ -10,7 +10,9 @@ export IMAGE = jshbrntt/awesome-todo:latest
 export NODE_VERSION = 16.13.0-alpine
 export BUILD_TARGET = dev
 
-up:
+.PHONY: up down login pull push lint clean
+
+up: pull
 	docker compose up --detach $(SERVICE)
 
 down:
@@ -19,10 +21,13 @@ down:
 login:
 	echo $(DOCKER_PASSWORD) | docker login $(DOCKER_REGISTRY) --username $(DOCKER_USERNAME) --password-stdin
 
-push:
-	docker compose push client server
+pull:
+	docker compose pull server
 
-lint:
+push:
+	docker compose push server
+
+lint: pull
 	docker compose run --rm server yarn lint
 
 clean:
