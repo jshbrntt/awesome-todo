@@ -4,39 +4,23 @@ Quickly written TODO app (to demonstrate dockerization).
 
 ## Getting Started
 
-1.  Install [Node.js](https://nodejs.org/en/)
+1.  Install [Docker](https://docs.docker.com/get-docker/)
 
-1.  Install [Yarn](https://classic.yarnpkg.com/lang/en/docs/install)
+1.  Install [Make](https://www.gnu.org/software/make/) (you probably already have it)
 
-1.  Install [MongoDB](https://docs.mongodb.com/manual/administration/install-community/)
+1.  _(Optional) Login to [GitHub container registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry) (to make use of cached Docker images)_
 
-1.  Install dependencies
-
-    ```shell
-    $ yarn install --frozen-lockfile
-    ```
-
-1. Start MongoDB
+1.  Start project
 
     ```shell
-    $ mongod --storageEngine ephemeralForTest --dbpath /tmp
-    ```
-
-1. Start Server
-
-    ```shell
-    $ yarn server
-    ```
-
-1. Start Client
-
-    ```shell
-    $ yarn client
+    $ make up
     ```
 
 1.  Go to app
 
-    http://localhost:3001/
+    http://localhost:3001
+
+1.  Configure via variables defined in `Makefile`
 
 ## Libraries
 
