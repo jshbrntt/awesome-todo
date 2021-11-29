@@ -6,7 +6,10 @@ x-monorepo:
     args:
       BUILDKIT_INLINE_CACHE:
       NODE_VERSION:
-  image: ${IMAGE_TAG}
+    cache_from:
+      - ${IMAGE}
+    target: ${BUILD_TARGET}
+  image: ${IMAGE}
   working_dir: ${WORKDIR}
   tty: true
   stdin_open: true
