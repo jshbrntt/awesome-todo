@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach",
+            "port": 9229,
+            "request": "attach",
+            "restart": true,
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "/srv/todo",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        }
+    ]
+}

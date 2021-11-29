@@ -27,6 +27,7 @@ services:
       MONGO_URI: mongodb://database:27017/todo
     ports:
       - ${SERVER_PORT}:3000
+      - ${SERVER_DEBUG_PORT}:9320
   client:
     << : *monorepo
     command: yarn client

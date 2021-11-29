@@ -3,6 +3,7 @@ export BUILDKIT_INLINE_CACHE = 1
 export WORKDIR = /srv/todo
 export CLIENT_PORT = 3001
 export SERVER_PORT = 3000
+export SERVER_DEBUG_PORT = 9229
 export MONGO_PORT = 27017
 export DOCKER_REGISTRY = docker.pkg.github.com/joshua-barnett
 export IMAGE_TAG = $(DOCKER_REGISTRY)/awesome-todo/dev
