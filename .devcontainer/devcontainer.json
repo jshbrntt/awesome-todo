@@ -1,0 +1,14 @@
+{
+    "name": "Awesome TODO",
+    "dockerComposeFile": [
+        "../docker-compose.yaml"
+    ],
+    "service": "server",
+    "workspaceFolder": "/srv/awesome-todo",
+    "runServices": [
+        "server",
+        "client",
+        "database"
+    ],
+    "remoteUser": "node"
+}
