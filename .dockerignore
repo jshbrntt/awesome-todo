@@ -1,1 +1,18 @@
-node_modules/
+# Exclude all
+*
+
+# Explicit includes
+!packages/client/.yarnrc
+!packages/client/package.json
+!packages/client/public
+!packages/client/src
+!packages/client/templates/default.conf.template
+!packages/client/yarn.lock
+!packages/infra/.yarnrc
+!packages/infra/package.json
+!packages/infra/yarn.lock
+!packages/server/.yarnrc
+!packages/server/config
+!packages/server/package.json
+!packages/server/src
+!packages/server/yarn.lock
