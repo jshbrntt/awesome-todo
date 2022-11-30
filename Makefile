@@ -1,34 +1,71 @@
-export DOCKER_BUILDKIT = 1
-export BUILDKIT_INLINE_CACHE = 1
-export WORKDIR = /srv/todo
-export CLIENT_PORT = 3001
-export SERVER_PORT = 3000
-export SERVER_DEBUG_PORT = 9229
-export MONGO_PORT = 27017
-export DOCKER_REGISTRY =
-export IMAGE = jshbrntt/awesome-todo:latest
-export NODE_VERSION = 16.13.0-alpine
-export BUILD_TARGET = dev
+BUILDKIT_INLINE_CACHE = 1
+DOCKER_BUILDKIT = 1
 
-.PHONY: up down login pull push lint clean
+DOCKER_REGISTRY = registry.gitlab.com
+IMAGE_PREFIX = registry.gitlab.com/awesome-todo/awesome-todo
+CURL_VERSION = 7.80.0
+NODE_VERSION = 16.13.2
+PULUMI_VERSION = 3.24.1
+MONGO_VERSION = 5.0.4
+TARGET = shell
+WORKDIR = /home/node
+BASE_IMAGE = node:$(NODE_VERSION)-alpine3.15
+SERVICES = database server client
 
-up: pull
-	docker compose up --detach $(SERVICE)
+NGINX_PORT = 5000
+CLIENT_PORT = 3001
+MONGO_PORT = 27017
+SERVER_DEBUG_PORT = 9229
+SERVER_PORT = 3000
+MONGO_URI = mongodb://database:27017/todo
 
-down:
-	docker compose down
+export
+
+.ONESHELL:
+.PHONY:
 
 login:
 	echo $(DOCKER_PASSWORD) | docker login $(DOCKER_REGISTRY) --username $(DOCKER_USERNAME) --password-stdin
 
-pull:
-	docker compose pull --ignore-pull-failures server
-
 push:
-	docker compose push server
+	docker compose push \
+server
 
-lint: pull
-	docker compose run --rm server yarn lint
+pull:
+	docker compose pull \
+--ignore-pull-failures \
+$(SERVICES)
+
+build:
+	docker compose build \
+$(SERVICE)
+
+up:
+	docker compose up \
+--build \
+--detach \
+$(SERVICES)
+
+down:
+	docker compose down
+
+command: build
+	docker compose run \
+--rm \
+--service-ports \
+--use-aliases \
+$(SERVICE) \
+$(COMMAND)
+
+shell: SERVICE = shell
+shell: COMMAND = sh
+shell: command
+
+infra: SERVICE = infra
+infra: COMMAND = sh
+infra: command
 
 clean:
-	docker compose down --rmi all --volumes
+	docker compose down \
+--rmi all \
+--volumes

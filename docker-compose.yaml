@@ -1,41 +1,74 @@
 version: '3.8'
 
-x-monorepo:
-  &monorepo
-  build:
-    args:
-      BUILDKIT_INLINE_CACHE:
-      NODE_VERSION:
-    cache_from:
-      - ${IMAGE}
-    target: ${BUILD_TARGET}
-  image: ${IMAGE}
-  working_dir: ${WORKDIR}
-  tty: true
-  stdin_open: true
-  volumes:
-    - .:${WORKDIR}
-
 services:
   database:
-    image: mongo:5.0.4
+    image: mongo:${MONGO_VERSION}
     volumes:
       - mongo_data_db:/data/db
     ports:
       - ${MONGO_PORT}:27017
   server:
-    << : *monorepo
-    command: yarn server
+    build:
+      args:
+        BASE_IMAGE:
+        BUILDKIT_INLINE_CACHE:
+        WORKDIR:
+      cache_from:
+        - ${IMAGE_PREFIX}/server/node_modules
+      target: server-node-modules
+    image: ${IMAGE_PREFIX}/server/node_modules
+    command: yarn start
     environment:
-      MONGO_URI: mongodb://database:27017/todo
+      MONGO_URI:
     ports:
       - ${SERVER_PORT}:3000
       - ${SERVER_DEBUG_PORT}:9320
+    volumes:
+      - ./packages/server:${WORKDIR}/packages/server
+    working_dir: ${WORKDIR}/packages/server
   client:
-    << : *monorepo
-    command: yarn client
+    build:
+      args:
+        BASE_IMAGE:
+        BUILDKIT_INLINE_CACHE:
+        WORKDIR:
+      cache_from:
+        - ${IMAGE_PREFIX}/client/node_modules
+      target: client-node-modules
+    image: ${IMAGE_PREFIX}/client/node_modules
+    command: yarn start
     ports:
       - ${CLIENT_PORT}:3000
+    volumes:
+      - ./packages/client:${WORKDIR}/packages/client
+    working_dir: ${WORKDIR}/packages/client
+  infra:
+    build:
+      args:
+        BASE_IMAGE:
+        BUILDKIT_INLINE_CACHE:
+        CURL_VERSION:
+        NODE_VERSION:
+        PULUMI_VERSION:
+        WORKDIR:
+      cache_from:
+        - ${IMAGE_PREFIX}/infra/node_modules
+      target: infra
+    command: sh
+    env_file: awesome-todo.env
+    image: ${IMAGE_PREFIX}/infra/node_modules
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./packages/infra:${WORKDIR}/packages/infra
+      - ./packages/infra/state:/home/node/.pulumi
+    working_dir: ${WORKDIR}/packages/infra
+  shell:
+    command: sh
+    image: ${BASE_IMAGE}
+    stdin_open: true
+    tty: true
+    working_dir: ${WORKDIR}
 
 volumes:
   mongo_data_db:
