@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   database:
     image: mongo:${MONGO_VERSION}
@@ -42,27 +40,27 @@ services:
     volumes:
       - ./packages/client:${WORKDIR}/packages/client
     working_dir: ${WORKDIR}/packages/client
-  infra:
-    build:
-      args:
-        BASE_IMAGE:
-        BUILDKIT_INLINE_CACHE:
-        CURL_VERSION:
-        NODE_VERSION:
-        PULUMI_VERSION:
-        WORKDIR:
-      cache_from:
-        - ${IMAGE_PREFIX}/infra/node_modules
-      target: infra
-    command: sh
-    env_file: awesome-todo.env
-    image: ${IMAGE_PREFIX}/infra/node_modules
-    stdin_open: true
-    tty: true
-    volumes:
-      - ./packages/infra:${WORKDIR}/packages/infra
-      - ./packages/infra/state:/home/node/.pulumi
-    working_dir: ${WORKDIR}/packages/infra
+  # infra:
+  #   build:
+  #     args:
+  #       BASE_IMAGE:
+  #       BUILDKIT_INLINE_CACHE:
+  #       CURL_VERSION:
+  #       NODE_VERSION:
+  #       PULUMI_VERSION:
+  #       WORKDIR:
+  #     cache_from:
+  #       - ${IMAGE_PREFIX}/infra/node_modules
+  #     target: infra
+  #   command: sh
+  #   env_file: awesome-todo.env
+  #   image: ${IMAGE_PREFIX}/infra/node_modules
+  #   stdin_open: true
+  #   tty: true
+  #   volumes:
+  #     - ./packages/infra:${WORKDIR}/packages/infra
+  #     - ./packages/infra/state:/home/node/.pulumi
+  #   working_dir: ${WORKDIR}/packages/infra
   shell:
     command: sh
     image: ${BASE_IMAGE}
